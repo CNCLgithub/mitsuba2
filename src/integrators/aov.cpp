@@ -30,7 +30,7 @@ surfaces.
    :caption: Scene rendered with a path tracer
 .. subfigure:: ../../resources/data/docs/images/render/integrator_aov_depth.y.jpg
    :caption: Depth AOV
-.. subfigure:: ../../resources/data/docs/images/render/integrator_aov_nn.jpg
+.. subfigure:: ../../resources/data/docs/images/render/integrator_aov_n.jpg
    :caption: Normal AOV
 .. subfigure:: ../../resources/data/docs/images/render/integrator_aov_position.jpg
    :caption: Position AOV
@@ -52,6 +52,7 @@ output file.
 Currently, the following AOVs types are available:
 
     - :monosp:`depth`: Distance from the pinhole.
+    - :monosp:`mask`: Object mask.
     - :monosp:`position`: World space position value.
     - :monosp:`uv`: UV coordinates.
     - :monosp:`geo_normal`: Geometric normal.
@@ -69,6 +70,7 @@ public:
 
     enum class Type {
         Depth,
+        Mask,
         Position,
         UV,
         GeometricNormal,
@@ -91,6 +93,9 @@ public:
 
             if (item[1] == "depth") {
                 m_aov_types.push_back(Type::Depth);
+                m_aov_names.push_back(item[0]);
+            } else if (item[1] == "mask") {
+                m_aov_types.push_back(Type::Mask);
                 m_aov_names.push_back(item[0]);
             } else if (item[1] == "position") {
                 m_aov_types.push_back(Type::Position);
@@ -171,6 +176,10 @@ public:
             switch (m_aov_types[i]) {
                 case Type::Depth:
                     *aovs++ = si.t;
+                    break;
+
+                case Type::Mask:
+                    *aovs++ = si.is_valid();
                     break;
 
                 case Type::Position:
