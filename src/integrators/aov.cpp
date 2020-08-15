@@ -52,7 +52,7 @@ output file.
 Currently, the following AOVs types are available:
 
     - :monosp:`depth`: Distance from the pinhole.
-    - :monosp:`mask`: Object mask.
+    - :monosp:`silhouette`: Object silhouette.
     - :monosp:`position`: World space position value.
     - :monosp:`uv`: UV coordinates.
     - :monosp:`geo_normal`: Geometric normal.
@@ -70,7 +70,7 @@ public:
 
     enum class Type {
         Depth,
-        Mask,
+        Silhouette,
         Position,
         UV,
         GeometricNormal,
@@ -94,8 +94,8 @@ public:
             if (item[1] == "depth") {
                 m_aov_types.push_back(Type::Depth);
                 m_aov_names.push_back(item[0]);
-            } else if (item[1] == "mask") {
-                m_aov_types.push_back(Type::Mask);
+            } else if (item[1] == "silhouette") {
+                m_aov_types.push_back(Type::Silhouette);
                 m_aov_names.push_back(item[0]);
             } else if (item[1] == "position") {
                 m_aov_types.push_back(Type::Position);
@@ -169,6 +169,7 @@ public:
         std::pair<Spectrum, Mask> result { 0.f, false };
 
         SurfaceInteraction3f si = scene->ray_intersect(ray, active);
+        Float silhouette = select(si.is_valid(), Float(1.f), Float(0.f));
         si[!si.is_valid()] = zero<SurfaceInteraction3f>();
         size_t ctr = 0;
 
@@ -178,8 +179,9 @@ public:
                     *aovs++ = si.t;
                     break;
 
-                case Type::Mask:
-                    *aovs++ = si.is_valid();
+                case Type::Silhouette:
+                    // *aovs++ = Float(si.is_valid());
+                    *aovs++ = silhouette;
                     break;
 
                 case Type::Position:
