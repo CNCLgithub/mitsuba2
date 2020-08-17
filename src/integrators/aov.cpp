@@ -30,7 +30,7 @@ surfaces.
    :caption: Scene rendered with a path tracer
 .. subfigure:: ../../resources/data/docs/images/render/integrator_aov_depth.y.jpg
    :caption: Depth AOV
-.. subfigure:: ../../resources/data/docs/images/render/integrator_aov_nn.jpg
+.. subfigure:: ../../resources/data/docs/images/render/integrator_aov_n.jpg
    :caption: Normal AOV
 .. subfigure:: ../../resources/data/docs/images/render/integrator_aov_position.jpg
    :caption: Position AOV
@@ -52,6 +52,7 @@ output file.
 Currently, the following AOVs types are available:
 
     - :monosp:`depth`: Distance from the pinhole.
+    - :monosp:`silhouette`: Object silhouette.
     - :monosp:`position`: World space position value.
     - :monosp:`uv`: UV coordinates.
     - :monosp:`geo_normal`: Geometric normal.
@@ -69,6 +70,7 @@ public:
 
     enum class Type {
         Depth,
+        Silhouette,
         Position,
         UV,
         GeometricNormal,
@@ -91,6 +93,9 @@ public:
 
             if (item[1] == "depth") {
                 m_aov_types.push_back(Type::Depth);
+                m_aov_names.push_back(item[0]);
+            } else if (item[1] == "silhouette") {
+                m_aov_types.push_back(Type::Silhouette);
                 m_aov_names.push_back(item[0]);
             } else if (item[1] == "position") {
                 m_aov_types.push_back(Type::Position);
@@ -164,6 +169,7 @@ public:
         std::pair<Spectrum, Mask> result { 0.f, false };
 
         SurfaceInteraction3f si = scene->ray_intersect(ray, active);
+        Float silhouette = select(si.is_valid(), Float(1.f), Float(0.f));
         si[!si.is_valid()] = zero<SurfaceInteraction3f>();
         size_t ctr = 0;
 
@@ -171,6 +177,11 @@ public:
             switch (m_aov_types[i]) {
                 case Type::Depth:
                     *aovs++ = si.t;
+                    break;
+
+                case Type::Silhouette:
+                    // *aovs++ = Float(si.is_valid());
+                    *aovs++ = silhouette;
                     break;
 
                 case Type::Position:
