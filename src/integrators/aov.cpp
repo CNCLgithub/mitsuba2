@@ -30,7 +30,7 @@ surfaces.
    :caption: Scene rendered with a path tracer
 .. subfigure:: ../../resources/data/docs/images/render/integrator_aov_depth.y.jpg
    :caption: Depth AOV
-.. subfigure:: ../../resources/data/docs/images/render/integrator_aov_n.jpg
+.. subfigure:: ../../resources/data/docs/images/render/integrator_aov_nn.jpg
    :caption: Normal AOV
 .. subfigure:: ../../resources/data/docs/images/render/integrator_aov_position.jpg
    :caption: Position AOV
