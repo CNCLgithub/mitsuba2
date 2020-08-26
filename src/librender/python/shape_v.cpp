@@ -85,11 +85,11 @@ MTS_PY_EXPORT(Shape) {
              D(Mesh, attribute_buffer), py::return_value_policy::reference_internal)
         .def("add_attribute", &Mesh::add_attribute, "name"_a, "size"_a,
              D(Mesh, add_attribute), py::return_value_policy::reference_internal)
-        .def("ray_intersect_triangle", vectorize(&Mesh::ray_intersect_triangle),
-             "index"_a, "ray"_a, "active"_a = true,
-             D(Mesh, ray_intersect_triangle));
         .def("resize_vertices", &Mesh::resize_vertices, "vertex_count"_a,
              D(Mesh, resize_vertices), py::return_value_policy::reference_internal)
         .def("resize_faces", &Mesh::resize_faces, "face_count"_a,
              D(Mesh, resize_faces), py::return_value_policy::reference_internal)
+        .def("ray_intersect_triangle", vectorize(&Mesh::ray_intersect_triangle),
+             "index"_a, "ray"_a, "active"_a = true,
+             D(Mesh, ray_intersect_triangle));
 }
