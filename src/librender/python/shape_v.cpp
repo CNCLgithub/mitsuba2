@@ -88,4 +88,8 @@ MTS_PY_EXPORT(Shape) {
         .def("ray_intersect_triangle", vectorize(&Mesh::ray_intersect_triangle),
              "index"_a, "ray"_a, "active"_a = true,
              D(Mesh, ray_intersect_triangle));
+        .def("resize_vertices", &Mesh::resize_vertices, "vertex_count"_a,
+             D(Mesh, resize_vertices), py::return_value_policy::reference_internal)
+        .def("resize_faces", &Mesh::resize_faces, "face_count"_a,
+             D(Mesh, resize_faces), py::return_value_policy::reference_internal)
 }

@@ -133,6 +133,12 @@ public:
     /// Recompute the bounding box (e.g. after modifying the vertex positions)
     void recompute_bbox();
 
+    /// Resize the vertex positions buffer
+    void resize_vertices(const size_t vertex_count);
+
+    /// Resize the vertex positions buffer
+    void resize_faces(const size_t face_count);
+
     // =============================================================
     //! @{ \name Shape interface implementation
     // =============================================================
