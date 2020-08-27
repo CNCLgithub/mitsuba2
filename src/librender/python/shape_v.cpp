@@ -65,9 +65,9 @@ MTS_PY_EXPORT(Shape) {
         .def_method(Mesh, has_vertex_texcoords)
         .def_method(Mesh, recompute_vertex_normals)
         .def_method(Mesh, recompute_bbox)
-        .def("resize_vertices", &Mesh::resize_vertices, "vertex_count"_a,
+        .def("resize_vertices", &Mesh::resize_vertices, "size"_a,
              "Resize vertex_positions_buf and update vertex_count")
-        .def("resize_faces", &Mesh::resize_faces, "face_count"_a,
+        .def("resize_faces", &Mesh::resize_faces, "size"_a,
              "Resize faces_buf and update face_count")
         .def("write_ply", &Mesh::write_ply, "filename"_a,
              "Export mesh as a binary PLY file")

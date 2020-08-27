@@ -134,10 +134,10 @@ public:
     void recompute_bbox();
 
     /// Resize the vertex positions buffer
-    void resize_vertices(const size_t vertex_count);
+    void resize_vertices(const size_t size);
 
-    /// Resize the vertex positions buffer
-    void resize_faces(const size_t face_count);
+    /// Resize the face buffer
+    void resize_faces(const size_t size);
 
     // =============================================================
     //! @{ \name Shape interface implementation

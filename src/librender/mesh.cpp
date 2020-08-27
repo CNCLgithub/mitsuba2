@@ -284,14 +284,12 @@ MTS_VARIANT void Mesh<Float, Spectrum>::recompute_bbox() {
         m_bbox.expand(vertex_position(i));
 }
 
-MTS_VARIANT void Mesh<Float, Spectrum>::resize_vertices(const size_t vertex_count) {
-    set_slices(m_vertex_normals_buf, vertex_count * 3);
-    m_vertex_count = vertex_count;
+MTS_VARIANT void Mesh<Float, Spectrum>::resize_vertices(const size_t size) {
+    set_slices(m_vertex_normals_buf, size);
 }
 
-MTS_VARIANT void Mesh<Float, Spectrum>::resize_faces(const size_t face_count) {
-    set_slices(m_faces_buf, face_count * 3);
-    m_face_count = face_count;
+MTS_VARIANT void Mesh<Float, Spectrum>::resize_faces(const size_t size) {
+    set_slices(m_faces_buf, size);
 }
 
 MTS_VARIANT void Mesh<Float, Spectrum>::area_distr_build() {
